@@ -7,6 +7,7 @@ public class ObjectMovement_script : MonoBehaviour
     public float[] MoveSpeed;
     private float _activeSpeed;
     public bool RandomSpeed;
+    public bool StopMovement;
 
     void Start()
     {
@@ -20,8 +21,10 @@ public class ObjectMovement_script : MonoBehaviour
 
     void FixedUpdate()
     {
-        DoMove();
-
+        if (!StopMovement)
+        {
+            DoMove();
+        }
     }
 
     void Update()

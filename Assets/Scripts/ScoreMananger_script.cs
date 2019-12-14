@@ -6,8 +6,10 @@ using UnityEngine;
 public class ScoreMananger_script : MonoBehaviour
 {
     public float MainScore;
-    public Transform PlayerTransform;
     private UIMananger_script _uiMananger;
+    public int GiftDelivered;
+    public EffectManager_script EffectManager;
+    public AudioClip AudioClip;
 
     void Start()
     {
@@ -17,22 +19,33 @@ public class ScoreMananger_script : MonoBehaviour
 
     public void AddScore(float score)
     {
-        Debug.Log("Add Score Start");
+        //Debug.Log("Add Score Start");
         if (score < 0) //taking damage
         {
             MainScore += score;
             _uiMananger.UpdateScore(MainScore);
             return;
         }
-        float temp;
-        temp = score * PlayerTransform.transform.position.y;
-        if (temp < 0)
+        if (score < 0)
         {
-            temp = (score * 10) / 100;
+            score = (score * 10) / 100;
         }
-        MainScore += temp;
-        Debug.Log("Add Score - " +temp);
+        MainScore += score;
+        EffectManager.PlaySFX(AudioClip);
+        if (MainScore < 0)
+        {
+            MainScore = 0;
+        }
+        //Debug.Log("Add Score - " +temp);
+        GiftDelivered++;
         _uiMananger.UpdateScore(MainScore);
         //score sound, effects
+    }
+
+    public void RestartValues()
+    {
+        GiftDelivered = 0;
+        MainScore = 0;
+        _uiMananger.UpdateScore(MainScore);
     }
 }

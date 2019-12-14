@@ -72,10 +72,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MoveSpeed:
-  - 10
-  - 15
-  - 8
-  - 12
+  - 25
+  - 45
+  - 18
+  - 30
   RandomSpeed: 1
 --- !u!1 &8329668207101615293
 GameObject:

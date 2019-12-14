@@ -11,22 +11,29 @@ public class ObjectSpawner_script : MonoBehaviour
     public float ObjectSpawnRate;
     public GameObject GameManger;
     public Transform Player;
+    private int _previusO;
+    private int _previusH;
+    private List<GameObject> _objects;
 
     void Start()
     {
-        StartCoroutine(SpawnHouse());
-        StartCoroutine(SpawnObstcle());
+        _objects = new List<GameObject>();
     }
 
     IEnumerator SpawnHouse()
     {
+        int r = GetRandom(_previusH, HousePrefabs.Length - 1);
+        _previusH = r;
+
+        GameObject go = Instantiate(HousePrefabs[r],ObjectHolder.transform.position,Quaternion.identity,ObjectHolder);
+        r = Random.Range(0, 2);
+        r = (r == 0) ? -1: 1;
+        go.transform.localScale = new Vector3(r,1,1);
+        _objects.Add(go);
+
         float timer = Random.Range(HouseSpawnRate / 2, HouseSpawnRate * 1.25f);
         yield return new WaitForSeconds(timer);
 
-        int previus = 0;
-        int r = GetRandom(previus, HousePrefabs.Length);
-
-        GameObject go = Instantiate(HousePrefabs[r],ObjectHolder.transform.position,Quaternion.identity,ObjectHolder);
         StartCoroutine(SpawnHouse());
     }
 
@@ -34,14 +41,39 @@ public class ObjectSpawner_script : MonoBehaviour
     {
         float timer = Random.Range(ObjectSpawnRate / 2, ObjectSpawnRate * 2);
         yield return new WaitForSeconds(timer);
-        
-        int previus = 0;
-        int r = GetRandom(previus, ObstaclePrefabs.Length);
+
+        int r = GetRandom(_previusO, ObstaclePrefabs.Length - 1);
+        _previusO = r;
 
         Vector2 spawnPos = new Vector2(ObjectHolder.transform.position.x, Player.transform.position.y);
         GameObject go = Instantiate(ObstaclePrefabs[r], spawnPos, Quaternion.identity, ObjectHolder);
-        
+
+        _objects.Add(go);
         StartCoroutine(SpawnObstcle());
+    }
+
+    public void StopSpawning()
+    {
+        StopAllCoroutines();
+    }
+
+    public void StartSpawning()
+    {
+        StartCoroutine(SpawnHouse());
+        StartCoroutine(SpawnObstcle());
+    }
+
+    public void CleanUp()
+    {
+        foreach (GameObject go in _objects)
+        {
+            if (go != null)
+            {
+                Destroy(go);
+            }
+        }
+
+        _objects = new List<GameObject>();
     }
 
     private int GetRandom(int previus, int max)

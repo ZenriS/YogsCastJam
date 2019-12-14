@@ -6,10 +6,21 @@ public class PlayerMovement_script : MonoBehaviour
 {
 
     public float MoveSpeed;
+    private GameController_script _gameController;
+    private Dropper_script _dropper;
+
+    void Start()
+    {
+        _dropper = GetComponent<Dropper_script>();
+        _gameController = _dropper.GameManger.GetComponent<GameController_script>();
+    }
     
     void Update()
     {
-        DoMove();
+        if (!_gameController.IsGameOver)
+        {
+            DoMove();
+        }
     }
 
     void DoMove()
