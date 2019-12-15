@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 31063183583219611}
   - component: {fileID: 31063183583219608}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HousePrefab01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,6 +49,7 @@ MonoBehaviour:
   MoveSpeed:
   - 20
   RandomSpeed: 0
+  StopMovement: 0
 --- !u!1 &31063184979707138
 GameObject:
   m_ObjectHideFlags: 0
@@ -60,7 +61,7 @@ GameObject:
   - component: {fileID: 31063184979707139}
   - component: {fileID: 31063184979707137}
   - component: {fileID: 31063184979707136}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HitPoint
   m_TagString: Finish
   m_Icon: {fileID: 0}
@@ -167,7 +168,7 @@ GameObject:
   m_Component:
   - component: {fileID: 31063185266780731}
   - component: {fileID: 31063185266780728}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MainGraphic
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -249,7 +250,7 @@ GameObject:
   - component: {fileID: 172221478358645547}
   - component: {fileID: 7810446234490721446}
   - component: {fileID: 9208313803635328619}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Collider00
   m_TagString: Obstacle
   m_Icon: {fileID: 0}

@@ -13,6 +13,8 @@ public class PlayerCollider_script : MonoBehaviour
     public ScoreText_script ScoreTextPrefab;
     public EffectManager_script EffectManager;
     public AudioClip AudioClip;
+    private bool _noColide;
+
 
     void Start()
     {
@@ -25,13 +27,14 @@ public class PlayerCollider_script : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.transform.tag == "Obstacle" && !_gameController.IsGameOver)
+        if (col.transform.tag == "Obstacle" && !_gameController.IsGameOver && !_noColide)
         {
             _dropper.DmgDrop();
             EffectManager.PlaySFX(AudioClip);
             ScoreText_script st = Instantiate(ScoreTextPrefab, this.transform.position, Quaternion.identity,
                 _dropper.DroppObjectHolder);
             st.Config(false, HitPenelaty);
+            Physics2D.IgnoreLayerCollision(9,10,true);
             //sound effect etc
             _scoreMananger.AddScore(HitPenelaty);
             StartCoroutine("InvisiFrames");
@@ -40,7 +43,8 @@ public class PlayerCollider_script : MonoBehaviour
 
     IEnumerator InvisiFrames()
     {
-        _col.enabled = false;
+        //_col.enabled = false;
+        _noColide = true;
         foreach (SpriteRenderer sr in _spriteRenderers)
         {
             sr.enabled = false;
@@ -88,7 +92,9 @@ public class PlayerCollider_script : MonoBehaviour
             sr.enabled = true;
         }
 
-        _col.enabled = true;
+        _noColide = false;
+        Physics2D.IgnoreLayerCollision(9, 10, false);
+        //_col.enabled = true;
     }
 
     public void ResetValue()
@@ -98,7 +104,10 @@ public class PlayerCollider_script : MonoBehaviour
         foreach (SpriteRenderer sr in _spriteRenderers)
         {
             sr.enabled = true;
-            _col.enabled = true;
+            _noColide = true;
+            Physics2D.IgnoreLayerCollision(9, 10, false);
+
+            //_col.enabled = true;
         }
     }
 }
