@@ -55,16 +55,18 @@ public class GameController_script : MonoBehaviour
         _uiMananger.ToggleGameOverUI(false, 0 ,0);
         Player.gameObject.SetActive(true);
         ObjectSpawner.StartSpawning();
+        Player.StartGifting();
     }
 
     public void Restart()
     {
         IsGameOver = false;
-
+        _uiMananger.ToggleGameOverUI(false, 0, 0);
         ObjectSpawner.StopSpawning();
         LevelCleanUp();
         ObjectSpawner.StartSpawning();
         _scoreMananger.RestartValues();
         Player.gameObject.SetActive(true);
+        Player.StartGifting();
     }
 }

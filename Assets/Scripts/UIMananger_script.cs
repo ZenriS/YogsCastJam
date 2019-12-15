@@ -10,6 +10,7 @@ public class UIMananger_script : MonoBehaviour
     public GameObject GameOverUI;
     private TextMeshProUGUI[] _gameOverTexts;
     public GameObject StartScreen;
+    public GameObject TopUI;
 
     void Start()
     {
@@ -32,7 +33,9 @@ public class UIMananger_script : MonoBehaviour
     public void ToggleGameOverUI(bool b, float score, int gifts)
     {
         GameOverUI.SetActive(b);
+        TopUI.SetActive(!b);
         _gameOverTexts[2].text = gifts.ToString("F0");
         _gameOverTexts[4].text = score.ToString("F0");
+        
     }
 }

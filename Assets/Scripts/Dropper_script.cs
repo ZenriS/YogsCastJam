@@ -29,14 +29,15 @@ public class Dropper_script : MonoBehaviour
     void OnEnable()
     {
         _uiMananger = GameManger.GetComponent<UIMananger_script>();
+        
+    }
+
+    public void StartGifting()
+    {
+        StopAllCoroutines();
         GiftCount = StarGiftCount;
         _uiMananger.UpdateGift(GiftCount);
         StartCoroutine("CreateGift");
-    }
-
-    void OnDisable()
-    {
-        StopAllCoroutines();
     }
     
     void Update()
