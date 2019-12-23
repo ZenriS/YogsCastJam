@@ -71,11 +71,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c072c7c83840bb44d9106932e4327511, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed:
-  - 25
-  - 45
-  - 18
-  - 30
+  MoveSpeedModifiers:
+  - 0.5
+  - 1
+  - 1.5
+  - 2
   RandomSpeed: 1
   StopMovement: 0
 --- !u!1 &8329668207101615293
@@ -148,7 +148,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7495081c4d67f5643acac3875b3bb3ee, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 05e34fcc2d97d3e4db8d9ccc1b3dda8d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

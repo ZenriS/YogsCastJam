@@ -14,9 +14,12 @@ public class ObjectSpawner_script : MonoBehaviour
     private int _previusO;
     private int _previusH;
     private List<GameObject> _objects;
+    public float BaseMoveSpeed;
+    public int HouseCount;
 
     void Start()
     {
+        Time.timeScale = 1;
         _objects = new List<GameObject>();
     }
 
@@ -26,14 +29,20 @@ public class ObjectSpawner_script : MonoBehaviour
         _previusH = r;
 
         GameObject go = Instantiate(HousePrefabs[r],ObjectHolder.transform.position,Quaternion.identity,ObjectHolder);
+        ObjectMovement_script om = go.GetComponent<ObjectMovement_script>();
+        om.Config(this);
+
         r = Random.Range(0, 2);
         r = (r == 0) ? -1: 1;
+
         go.transform.localScale = new Vector3(r,1,1);
         _objects.Add(go);
 
         float timer = Random.Range(HouseSpawnRate / 2, HouseSpawnRate * 1.25f);
         yield return new WaitForSeconds(timer);
 
+        HouseCount++;
+        CheckSpeed();
         StartCoroutine(SpawnHouse());
     }
 
@@ -47,6 +56,9 @@ public class ObjectSpawner_script : MonoBehaviour
 
         Vector2 spawnPos = new Vector2(ObjectHolder.transform.position.x, Player.transform.position.y);
         GameObject go = Instantiate(ObstaclePrefabs[r], spawnPos, Quaternion.identity, ObjectHolder);
+
+        ObjectMovement_script om = go.GetComponent<ObjectMovement_script>();
+        om.Config(this);
 
         _objects.Add(go);
         StartCoroutine(SpawnObstcle());
@@ -65,6 +77,7 @@ public class ObjectSpawner_script : MonoBehaviour
 
     public void CleanUp()
     {
+        Time.timeScale = 1;
         foreach (GameObject go in _objects)
         {
             if (go != null)
@@ -72,7 +85,6 @@ public class ObjectSpawner_script : MonoBehaviour
                 Destroy(go);
             }
         }
-
         _objects = new List<GameObject>();
     }
 
@@ -92,5 +104,55 @@ public class ObjectSpawner_script : MonoBehaviour
         }
 
         return r;
+    }
+
+    private float CheckSpeed()
+    {
+        float newSpeed = 0;
+        switch (HouseCount)
+        {
+            case 10:
+                Time.timeScale = 1.1f;
+                //newSpeed = BaseMoveSpeed * 1.1f;
+                break;
+            case 30:
+                Time.timeScale = 1.2f;
+                //newSpeed = BaseMoveSpeed * 1.1f;
+                break;
+            case 50:
+                Time.timeScale = 1.3f;
+                //newSpeed = BaseMoveSpeed * 1.1f;
+                break;
+            case 70:
+                Time.timeScale = 1.4f;
+                //newSpeed = BaseMoveSpeed * 1.1f;
+                break;
+            case 90:
+                Time.timeScale = 1.5f;
+                //newSpeed = BaseMoveSpeed * 1.1f;
+                break;
+            /*case 35:
+                Time.timeScale = 1.6f;
+                //newSpeed = BaseMoveSpeed * 1.1f;
+                break;
+            case 40:
+                Time.timeScale = 1.7f;
+                //newSpeed = BaseMoveSpeed * 1.1f;
+                break;
+            case 45:
+                Time.timeScale = 1.8f;
+                //newSpeed = BaseMoveSpeed * 1.1f;
+                break;
+            case 50:
+                Time.timeScale = 1.9f;
+                //newSpeed = BaseMoveSpeed * 1.1f;
+                break;
+            case 55:
+                Time.timeScale = 2f;
+                //newSpeed = BaseMoveSpeed * 1.1f;
+                break;*/
+        }
+        
+        return newSpeed;
     }
 }

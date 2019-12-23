@@ -102,10 +102,10 @@ public class Dropper_script : MonoBehaviour
 
     private void DoGiftCheck()
     {
-        if (GiftCount <= -1)
+        if (GiftCount <= 0)
         {
             GiftCount = 0;
-            _gameController.GameIsOver();
+            _gameController.Invoke("GameIsOver",2f);
             //GameOver
 
         }

@@ -4,18 +4,28 @@ using UnityEngine;
 
 public class ObjectMovement_script : MonoBehaviour
 {
-    public float[] MoveSpeed;
+    public float[] MoveSpeedModifiers;
     private float _activeSpeed;
     public bool RandomSpeed;
     public bool StopMovement;
+    public ObjectSpawner_script _objectSpawner;
 
     void Start()
     {
-        _activeSpeed = MoveSpeed[0];
+        if (_objectSpawner != null)
+        {
+            Config(_objectSpawner);
+        }
+    }
+
+    public void Config(ObjectSpawner_script os)
+    {
+        _objectSpawner = os;
+        _activeSpeed = MoveSpeedModifiers[0];
         if (RandomSpeed)
         {
-            int r = Random.Range(0, MoveSpeed.Length);
-            _activeSpeed = MoveSpeed[r];
+            int r = Random.Range(0, MoveSpeedModifiers.Length);
+            _activeSpeed = MoveSpeedModifiers[r];
         }
     }
 
@@ -34,7 +44,8 @@ public class ObjectMovement_script : MonoBehaviour
 
     private void DoMove()
     {
-        float step = _activeSpeed * Time.deltaTime;
+        float step = _activeSpeed * _objectSpawner.BaseMoveSpeed;
+        step = step * Time.deltaTime;
         transform.Translate(Vector3.left * step);
     }
 
